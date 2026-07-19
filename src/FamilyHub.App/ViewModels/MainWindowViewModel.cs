@@ -74,11 +74,11 @@ public sealed partial class MainWindowViewModel : ObservableObject, IDisposable
         _rotation = rotation;
         _weatherProvider = weatherProvider;
         _companion = companion;
-        var schoolProvider = new JsonSchoolCalendarProvider(Path.Combine(AppContext.BaseDirectory, "school-calendars.json"));
+        var schoolProvider = new JsonSchoolCalendarProvider(DataFile.Resolve("school-calendars.json"));
         var allSchools = schoolProvider.LoadAll();
         _schoolCalendars = allSchools.Where(calendar => calendar.IsReviewed).ToArray();
         PendingSchoolCalendars = allSchools.Count - _schoolCalendars.Length;
-        _scheduleBook = new JsonBellScheduleProvider(Path.Combine(AppContext.BaseDirectory, "bell-schedules.json")).Load();
+        _scheduleBook = new JsonBellScheduleProvider(DataFile.Resolve("bell-schedules.json")).Load();
         _news = new RssNewsProvider(new HttpClient { Timeout = TimeSpan.FromSeconds(15) });
         _rotation.PageChanged += OnPageChanged;
         CalendarDays = new ObservableCollection<CalendarDayViewModel>();
