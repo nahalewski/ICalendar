@@ -10,7 +10,7 @@ namespace FamilyHub.App;
 public sealed partial class MainWindow : Window
 {
     private Avalonia.Point _pointerStart;
-    public MainWindow() : this(new MainWindowViewModel(new RotationController(), new OpenMeteoWeatherProvider(new HttpClient()), new FamilyHub.Web.CompanionControlState())) { }
+    public MainWindow() : this(new MainWindowViewModel(new RotationController(), new OpenMeteoWeatherProvider(new HttpClient()), new FamilyHub.Web.CompanionControlState(), new FamilyHub.Web.DashboardFeed())) { }
     public MainWindow(MainWindowViewModel viewModel) { InitializeComponent(); DataContext = viewModel; }
     private MainWindowViewModel ViewModel => (MainWindowViewModel)DataContext!;
     private void OnPointerPressed(object? sender, PointerPressedEventArgs e) { ViewModel.Interact(); _pointerStart = e.GetPosition(this); }

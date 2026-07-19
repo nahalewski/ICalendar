@@ -23,6 +23,7 @@ public sealed partial class MainWindowViewModel : ObservableObject, IDisposable
     private readonly Timer _clock;
     private readonly Timer _autoRotate;
     private readonly Timer _weatherRefresh;
+    private readonly Timer _newsRefresh;
     private TimeSpan _rotationInterval = TimeSpan.FromSeconds(90);
     private TimeSpan _resumeDelay = TimeSpan.FromSeconds(30);
     private bool _rotationEnabled = true;
@@ -32,6 +33,8 @@ public sealed partial class MainWindowViewModel : ObservableObject, IDisposable
     private DateOnly _generatedDate;
     private DateOnly _displayedMonth;
     private IReadOnlyList<Holiday> _holidays = [];
+    private readonly DashboardFeed _feed;
+    private DateTimeOffset _lastSnapshot = DateTimeOffset.MinValue;
 
     [ObservableProperty] private DashboardPage currentPage;
     [ObservableProperty] private DateTimeOffset now = DateTimeOffset.Now;
@@ -69,11 +72,13 @@ public sealed partial class MainWindowViewModel : ObservableObject, IDisposable
     [ObservableProperty] private string currentLocationName = "Sanford, NC";
     [ObservableProperty] private string currentIcon = "🌤";
 
-    public MainWindowViewModel(IRotationController rotation, IWeatherProvider weatherProvider, CompanionControlState companion)
+    public MainWindowViewModel(IRotationController rotation, IWeatherProvider weatherProvider,
+        CompanionControlState companion, DashboardFeed feed)
     {
         _rotation = rotation;
         _weatherProvider = weatherProvider;
         _companion = companion;
+        _feed = feed;
         var schoolProvider = new JsonSchoolCalendarProvider(DataFile.Resolve("school-calendars.json"));
         var allSchools = schoolProvider.LoadAll();
         _schoolCalendars = allSchools.Where(calendar => calendar.IsReviewed).ToArray();
@@ -101,6 +106,9 @@ public sealed partial class MainWindowViewModel : ObservableObject, IDisposable
             { if (_rotationEnabled) _rotation.TryRotate(DateTimeOffset.UtcNow, _rotationInterval, _resumeDelay); }),
             null, TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(1));
         _weatherRefresh = new Timer(_ => _ = RefreshWeatherAsync(), null, TimeSpan.FromSeconds(30), TimeSpan.FromSeconds(30));
+        // Headlines are fetched on a schedule rather than only when this app's News page opens,
+        // because browser clients read them from the feed and never trigger that navigation.
+        _newsRefresh = new Timer(_ => _ = RefreshNewsAsync(), null, TimeSpan.FromSeconds(10), TimeSpan.FromMinutes(15));
     }
 
     private async Task RefreshWeatherAsync()
@@ -249,6 +257,7 @@ public sealed partial class MainWindowViewModel : ObservableObject, IDisposable
             {
                 NewsStories.Clear();
                 foreach (var story in stories) NewsStories.Add(story);
+                _feed.PublishNews(DashboardSnapshot.BuildNews(stories));
                 var outlets = stories.Select(story => story.SourceName).Distinct().Count();
                 NewsStatus = stories.Count == 0
                     ? "No headlines available — check the network connection."
@@ -355,6 +364,26 @@ public sealed partial class MainWindowViewModel : ObservableObject, IDisposable
         var today = DateOnly.FromDateTime(Now.LocalDateTime);
         if (today != _generatedDate) { GenerateDateDrivenContent(today); RebuildScheduleRows(); }
         UpdateClassBlocks();
+        PublishSnapshot();
+    }
+
+    /// <summary>
+    /// Publishes state for browser clients. Throttled to once every few seconds: the browser
+    /// computes its own per-second block progress, so a faster cadence would be wasted work.
+    /// </summary>
+    private void PublishSnapshot()
+    {
+        if (Now - _lastSnapshot < TimeSpan.FromSeconds(5)) return;
+        _lastSnapshot = Now;
+        try
+        {
+            _feed.Publish(DashboardSnapshot.Build(this, _scheduleBook, SchoolClosureReason,
+                CurrentPage.ToString(), (int)_rotationInterval.TotalSeconds, _rotationEnabled));
+        }
+        catch (Exception exception) when (exception is InvalidOperationException or ArgumentException)
+        {
+            // A snapshot failure must never take down the desktop dashboard itself.
+        }
     }
 
     private void GenerateDateDrivenContent(DateOnly today)
@@ -491,7 +520,7 @@ public sealed partial class MainWindowViewModel : ObservableObject, IDisposable
         OnPropertyChanged(nameof(HasSearchResults));
     }
     public void Interact() => _rotation.RecordInteraction(DateTimeOffset.UtcNow);
-    public void Dispose() { _rotation.PageChanged -= OnPageChanged; _clock.Dispose(); _autoRotate.Dispose(); _weatherRefresh.Dispose(); }
+    public void Dispose() { _rotation.PageChanged -= OnPageChanged; _clock.Dispose(); _autoRotate.Dispose(); _weatherRefresh.Dispose(); _newsRefresh.Dispose(); }
 }
 
 /// <summary>Saved home location. <paramref name="Query"/> is what the person actually typed (usually a

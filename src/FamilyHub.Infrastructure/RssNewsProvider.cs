@@ -36,7 +36,7 @@ public sealed class RssNewsProvider(HttpClient httpClient)
     /// </summary>
     public static IReadOnlyList<NewsSource> DefaultSources { get; } =
     [
-        new("AP-style wire — BBC News", "https://feeds.bbci.co.uk/news/world/rss.xml", "Centre", "#6B7280"),
+        new("BBC News", "https://feeds.bbci.co.uk/news/world/rss.xml", "Centre", "#6B7280"),
         new("Christian Science Monitor", "https://rss.csmonitor.com/feeds/all", "Centre", "#0F766E"),
         new("PBS NewsHour", "https://www.pbs.org/newshour/feeds/rss/headlines", "Centre", "#1D4ED8"),
         new("The Hill", "https://thehill.com/news/feed/", "Centre", "#475569"),

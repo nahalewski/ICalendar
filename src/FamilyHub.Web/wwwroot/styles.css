@@ -1,0 +1,154 @@
+/* Styling for a wall display driven by a Pi Zero W.
+   No transitions, animations, shadows, blurs, gradients or web fonts: an ARMv6 single core with no
+   GPU compositing repaints the whole screen for any of them. Flat colour and system fonts only. */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #fcf9f5;
+  --surface: #ffffff;
+  --ink: #092354;
+  --muted: #667085;
+  --line: #ece7e1;
+  --accent: #ff5c60;
+}
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  overflow: hidden;
+}
+
+body { display: flex; flex-direction: column; }
+
+.hidden { display: none !important; }
+.muted { color: var(--muted); }
+.small { font-size: 12px; }
+
+.banner {
+  background: #c62828; color: #fff; text-align: center;
+  padding: 6px; font-size: 14px; font-weight: 600;
+}
+
+header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 20px; border-bottom: 1px solid var(--line); background: var(--surface);
+}
+#clock { font-size: 34px; font-weight: 700; line-height: 1; }
+#date { font-size: 14px; }
+.head-right { display: flex; align-items: center; gap: 16px; }
+.note { color: var(--accent); font-weight: 600; font-size: 15px; }
+.pill {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 6px 12px;
+}
+#pillIcon { font-size: 22px; }
+#pillTemp { font-weight: 700; font-size: 18px; }
+
+nav { display: flex; gap: 6px; padding: 8px 20px; border-bottom: 1px solid var(--line); }
+nav button {
+  font: inherit; font-size: 13px; padding: 6px 14px; border-radius: 10px;
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer;
+}
+nav button.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+main { flex: 1; overflow: hidden; position: relative; }
+.page { display: none; height: 100%; overflow-y: auto; padding: 16px 20px; }
+.page.on { display: block; }
+h1 { font-size: 28px; margin-bottom: 12px; }
+
+.callout {
+  background: #fff1d6; color: #8a5a00; border-radius: 10px; padding: 10px 14px; margin-bottom: 12px;
+}
+
+/* Lists ------------------------------------------------------------------------------------- */
+.list { display: flex; flex-direction: column; gap: 8px; }
+.item {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px;
+}
+.item .when { font-weight: 700; }
+.empty { color: var(--muted); padding: 20px 0; }
+
+/* Month ------------------------------------------------------------------------------------- */
+.weekdays, .month { display: grid; grid-template-columns: repeat(7, 1fr); }
+.weekdays { font-weight: 700; font-size: 13px; padding-bottom: 6px; }
+.weekdays div { text-align: center; }
+.month { gap: 2px; }
+.cell {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
+  min-height: 84px; padding: 4px 5px; overflow: hidden;
+}
+.cell.dim { opacity: .38; }
+.cell .n { font-weight: 700; font-size: 14px; }
+.cell.today .n {
+  background: var(--accent); color: #fff; border-radius: 50%;
+  width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;
+}
+.chip {
+  font-size: 10px; border-radius: 4px; padding: 1px 4px; margin-top: 2px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* Week -------------------------------------------------------------------------------------- */
+.week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; height: 80%; }
+.week .col {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 8px;
+  overflow: hidden;
+}
+.week .col h3 { font-size: 13px; margin-bottom: 6px; }
+
+/* Weather ----------------------------------------------------------------------------------- */
+.wx-top { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 14px; }
+.wx-now {
+  display: flex; align-items: center; gap: 16px; background: #8fd7f4;
+  border-radius: 14px; padding: 18px 24px; flex: 1; min-width: 300px;
+}
+.wx-icon { font-size: 64px; }
+.wx-temp { font-size: 52px; font-weight: 700; line-height: 1; }
+.wx-cond { font-size: 20px; font-weight: 600; }
+.wx-stats { display: grid; grid-template-columns: repeat(3, minmax(110px, 1fr)); gap: 8px; flex: 1; }
+.stat { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px; }
+.stat .k { font-size: 11px; color: var(--muted); }
+.stat .v { font-size: 19px; font-weight: 700; }
+.forecast { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-bottom: 10px; }
+.fc {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+  padding: 10px 6px; text-align: center;
+}
+.fc .d { font-weight: 700; font-size: 12px; }
+.fc .i { font-size: 26px; }
+.fc .t { font-size: 15px; font-weight: 700; }
+
+/* Class block ------------------------------------------------------------------------------- */
+.students { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; }
+.stu { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px; }
+.stu-head { display: flex; align-items: center; gap: 12px; }
+.avatar {
+  width: 44px; height: 44px; border-radius: 50%; color: #fff;
+  display: flex; align-items: center; justify-content: center; font-size: 19px; font-weight: 700;
+}
+.stu-name { font-size: 20px; font-weight: 700; }
+.stu-level { font-size: 11px; color: var(--muted); }
+.stu-now { font-size: 19px; font-weight: 700; margin-top: 8px; }
+.stu-detail { font-size: 13px; color: var(--muted); }
+.bar { height: 12px; border-radius: 6px; background: #efeae4; margin-top: 8px; overflow: hidden; }
+.bar > i { display: block; height: 100%; border-radius: 6px; }
+.bar.day { height: 7px; }
+.bar-label { font-size: 10px; color: var(--muted); margin-top: 6px; }
+
+/* News -------------------------------------------------------------------------------------- */
+.src {
+  display: inline-block; color: #fff; border-radius: 6px;
+  padding: 2px 8px; font-size: 11px; font-weight: 700;
+}
+.news-title { font-size: 17px; font-weight: 700; margin: 6px 0 4px; }
+.news-sum { font-size: 13px; }
+.news-link { font-size: 11px; color: #2563eb; word-break: break-all; margin-top: 4px; }
+.disclaimer {
+  background: #f7f4f0; border-radius: 8px; padding: 8px 10px;
+  font-size: 10px; color: var(--muted); margin-top: 6px;
+}
+
+footer { padding: 6px 20px; border-top: 1px solid var(--line); background: var(--surface); }

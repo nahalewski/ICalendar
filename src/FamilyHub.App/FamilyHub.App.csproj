@@ -15,4 +15,9 @@
   <ItemGroup><FrameworkReference Include="Microsoft.AspNetCore.App" /></ItemGroup>
   <ItemGroup><AvaloniaResource Include="Assets/**" /></ItemGroup>
   <ItemGroup><Content Include="school-calendars.json" CopyToOutputDirectory="PreserveNewest" /><Content Include="bell-schedules.json" CopyToOutputDirectory="PreserveNewest" /></ItemGroup>
+  <!-- The app hosts Kestrel, so the browser dashboard's assets must land in *this* project's
+       output. Content from a referenced library does not flow through on its own. -->
+  <ItemGroup>
+    <Content Include="../FamilyHub.Web/wwwroot/**" Link="wwwroot/%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
 </Project>

@@ -25,6 +25,7 @@ internal static class Program
             // One instance shared by the dashboard and the companion API, so events saved from the
             // phone and events created here land in the same store.
             services.AddSingleton<CompanionControlState>();
+            services.AddSingleton<DashboardFeed>();
             services.AddHttpClient<IWeatherProvider, OpenMeteoWeatherProvider>()
                 .ConfigurePrimaryHttpMessageHandler(() => new SocketsHttpHandler { UseProxy = false });
             services.AddSingleton<MainWindowViewModel>();
@@ -44,9 +45,10 @@ internal sealed class LocalApiHostedService : IHostedService
 {
     private readonly IRotationController _rotation;
     private readonly CompanionControlState _controlState;
+    private readonly DashboardFeed _feed;
     private WebApplication? _app;
-    public LocalApiHostedService(IRotationController rotation, CompanionControlState controlState)
-        => (_rotation, _controlState) = (rotation, controlState);
+    public LocalApiHostedService(IRotationController rotation, CompanionControlState controlState, DashboardFeed feed)
+        => (_rotation, _controlState, _feed) = (rotation, controlState, feed);
     public async Task StartAsync(CancellationToken cancellationToken)
     {
         var builder = WebApplication.CreateSlimBuilder();
@@ -61,9 +63,11 @@ internal sealed class LocalApiHostedService : IHostedService
         controlState.RotationChanged += (_, settings) => Dispatcher.UIThread.Post(() =>
             Program.Services.Services.GetRequiredService<MainWindowViewModel>().ApplyRotationSettings(settings));
         builder.Services.AddSingleton(controlState);
+        builder.Services.AddSingleton(_feed);
         builder.Services.AddFamilyHubWeb();
         _app = builder.Build();
         _app.MapFamilyHub();
+        _app.MapFamilyHubDashboard();
         await _app.StartAsync(cancellationToken);
     }
     public async Task StopAsync(CancellationToken cancellationToken)

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FamilyHub</title>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div id="offline" class="banner hidden">Reconnecting to FamilyHub…</div>
+
+<header>
+  <div>
+    <div id="clock">--:--</div>
+    <div id="date" class="muted"></div>
+  </div>
+  <div class="head-right">
+    <div id="headNote" class="note"></div>
+    <div id="weatherPill" class="pill">
+      <span id="pillIcon">🌤</span>
+      <span id="pillTemp">--°</span>
+      <span id="pillLoc" class="muted"></span>
+    </div>
+  </div>
+</header>
+
+<nav id="nav"></nav>
+
+<main>
+  <!-- Each page is plain markup toggled by a class; no framework, no transitions. -->
+  <section id="page-Daily" class="page">
+    <h1>Today</h1>
+    <div id="todayNote" class="callout hidden"></div>
+    <div id="agenda" class="list"></div>
+  </section>
+
+  <section id="page-Monthly" class="page">
+    <h1 id="monthTitle">Month</h1>
+    <div class="weekdays">
+      <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+    </div>
+    <div id="monthGrid" class="month"></div>
+  </section>
+
+  <section id="page-Weekly" class="page">
+    <h1 id="weekTitle">Week</h1>
+    <div id="weekGrid" class="week"></div>
+  </section>
+
+  <section id="page-Weather" class="page">
+    <h1>Weather</h1>
+    <div class="wx-top">
+      <div class="wx-now">
+        <div id="wxIcon" class="wx-icon">🌤</div>
+        <div>
+          <div id="wxTemp" class="wx-temp">--°</div>
+          <div id="wxCond" class="wx-cond"></div>
+          <div id="wxFeels" class="muted"></div>
+          <div id="wxLoc" class="muted"></div>
+        </div>
+      </div>
+      <div id="wxStats" class="wx-stats"></div>
+    </div>
+    <div id="forecast" class="forecast"></div>
+    <div id="wxStatus" class="muted small"></div>
+  </section>
+
+  <section id="page-ClassBlock" class="page">
+    <h1>Class Block <span id="cbHeader" class="note"></span></h1>
+    <div id="students" class="students"></div>
+  </section>
+
+  <section id="page-News" class="page">
+    <h1>News</h1>
+    <div class="callout small">
+      Headlines come straight from each outlet's public RSS feed, in the outlet's own words.
+      FamilyHub does not write, edit, verify, or endorse any of it. Perspective labels are a rough
+      guide from commonly cited media-bias assessments, which are themselves contested — read widely.
+    </div>
+    <div id="news" class="list"></div>
+  </section>
+</main>
+
+<footer><span id="status" class="muted small"></span></footer>
+
+<script src="/app.js"></script>
+</body>
+</html>

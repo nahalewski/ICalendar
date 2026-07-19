@@ -89,6 +89,52 @@ cross-build below and let the Pi only run the result.
 Check what you have: `uname -m` must print `aarch64`. If it prints `armv6l` or `armv7l` you are on
 32-bit or unsupported hardware. The installer warns and asks before continuing.
 
+---
+
+## Pi Zero W: browser kiosk instead
+
+A Pi Zero W **cannot run the app** — it is ARMv6 and .NET has no runtime for that architecture. It
+can still be the display. The PC runs FamilyHub and already serves a browser dashboard on port 5643;
+the Zero W just shows it in Chromium.
+
+```bash
+sudo apt install -y chromium-browser unclutter
+cd ~/ICalendar/scripts/pi-kiosk && chmod +x install-kiosk.sh
+./install-kiosk.sh --host 192.168.1.50          # the PC running FamilyHub
+```
+
+The Pi must boot to the desktop: `sudo raspi-config` → System Options → Boot / Auto Login →
+**Desktop Autologin**.
+
+| | |
+|---|---|
+| Rotate the display | `--rotate right` (also `left`, `inverted`) |
+| Different port | `--port 5643` |
+| Start without rebooting | `~/.local/bin/familyhub-kiosk.sh` |
+| Quit the kiosk | `Alt+F4`, or `pkill -f chromium.*kiosk` over ssh |
+| Remove | `./install-kiosk.sh --uninstall` |
+
+What the launcher handles for you: screen blanking and DPMS off, pointer hidden, Chromium's
+"didn't shut down correctly" bubble cleared after a power cut, and a retry loop so the Pi can boot
+before the PC does. GPU rasterisation is deliberately **off** — on ARMv6 with no usable compositing
+it is slower than CPU rendering, not faster.
+
+Honest expectations on a Zero W: roughly a minute from power-on to the dashboard, and page switches
+take a beat. Fine for a calendar that changes by the minute. The dashboard is built for that budget
+— no framework, no animations, one small fetch every 30 seconds, and the class-block progress bars
+are computed in the browser so the ticking costs no network traffic at all.
+
+**The PC's firewall must allow inbound TCP 5643.** If the Pi shows "Reconnecting to FamilyHub…",
+that is the first thing to check:
+
+```powershell
+New-NetFirewallRule -DisplayName "FamilyHub 5643" -Direction Inbound -LocalPort 5643 -Protocol TCP -Action Allow
+```
+
+You can open the same dashboard from any phone or tablet on the network at `http://<pc>:5643/`.
+
+---
+
 ### Low-memory Pis: build elsewhere
 
 Publish self-contained on this PC and copy the output over, so the Pi never compiles:

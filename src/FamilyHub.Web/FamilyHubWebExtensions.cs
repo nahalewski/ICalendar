@@ -13,8 +13,47 @@ public static class FamilyHubWebExtensions
         // TryAdd so a host that already owns the shared state (the desktop app does, to keep the
         // dashboard and the companion API on one instance) wins regardless of registration order.
         services.TryAddSingleton<CompanionControlState>();
+        services.TryAddSingleton<DashboardFeed>();
         services.AddHealthChecks();
         return services;
+    }
+
+    /// <summary>
+    /// Serves the browser dashboard used by low-power displays that cannot run the desktop app.
+    /// </summary>
+    /// <remarks>
+    /// Files are mapped explicitly rather than through the static-file middleware: CreateSlimBuilder
+    /// sets no web root, and three explicit routes are more predictable than configuring a file
+    /// provider that silently serves nothing when the output layout changes.
+    /// </remarks>
+    public static WebApplication MapFamilyHubDashboard(this WebApplication app)
+    {
+        var root = Path.Combine(AppContext.BaseDirectory, "wwwroot");
+
+        IResult ServeFile(string name, string contentType)
+        {
+            var path = Path.Combine(root, name);
+            return File.Exists(path)
+                ? Results.File(path, contentType)
+                : Results.NotFound($"{name} was not published to {root}");
+        }
+
+        app.MapGet("/", () => ServeFile("index.html", "text/html; charset=utf-8"));
+        app.MapGet("/app.js", () => ServeFile("app.js", "text/javascript; charset=utf-8"));
+        app.MapGet("/styles.css", () => ServeFile("styles.css", "text/css; charset=utf-8"));
+
+        app.MapGet("/api/view/state", (DashboardFeed feed) =>
+            feed.State is { } state
+                ? Results.Ok(state)
+                : Results.Json(new { message = "The dashboard has not published a snapshot yet." }, statusCode: 503));
+
+        app.MapGet("/api/view/news", (DashboardFeed feed) =>
+        {
+            var (stories, updatedAt) = feed.News;
+            return Results.Ok(new { stories, updatedAt });
+        });
+
+        return app;
     }
 
     public static WebApplication MapFamilyHub(this WebApplication app)
