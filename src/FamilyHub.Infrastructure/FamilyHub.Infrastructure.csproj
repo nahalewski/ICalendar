@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Http" />
+    <ProjectReference Include="../FamilyHub.Core/FamilyHub.Core.csproj" />
+    <ProjectReference Include="../FamilyHub.Application/FamilyHub.Application.csproj" />
+    <ProjectReference Include="../FamilyHub.Shared/FamilyHub.Shared.csproj" />
+  </ItemGroup>
+</Project>

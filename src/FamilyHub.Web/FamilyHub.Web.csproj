@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <ItemGroup>
+    <ProjectReference Include="../FamilyHub.Application/FamilyHub.Application.csproj" />
+    <ProjectReference Include="../FamilyHub.Shared/FamilyHub.Shared.csproj" />
+  </ItemGroup>
+</Project>

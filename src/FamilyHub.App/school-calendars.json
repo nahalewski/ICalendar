@@ -1,0 +1,181 @@
+// School calendars for the FamilyHub dashboard.
+//
+// Neither district publishes an iCal feed, so dates are transcribed here and reviewed against the
+// official document before they appear on the wall calendar. A calendar only reaches the dashboard
+// once its "status" is "Reviewed" — a wrong first day of school is worse than a blank calendar.
+//
+// "kind" is one of: FirstDay, LastDay, NoSchool, TeacherWorkday, EarlyRelease, Break, Event.
+// "endDate" is optional and inclusive; use it for multi-day runs.
+{
+  "schools": [
+    {
+      "name": "Harnett County Schools",
+      "shortName": "HCS",
+      "color": "#2563EB",
+      "schoolYear": "2023-2024",
+      "status": "Reviewed",
+      "sourceUrl": "https://docs.google.com/document/d/1u-PaIuhu-rwV7287j1VQWwJ0kegjp1w4BscxVW3RYFY/edit",
+
+      // PROVENANCE: extracted from the official "Harnett County Schools 2023-2024 Academic
+      // Calendar, Revised 5/6/2024" Google Doc. Colours were read from the DOCX table cell shading
+      // (exact hex values), not guessed from pixels, and mapped through the document's own legend:
+      //
+      //   bus icon  -> First / Last Day of School      ff0000 red     -> Holiday
+      //   3d85c6 /  3c78d8 blue -> Mandatory Workday   9900ff purple  -> Workday
+      //   ffff00 yellow -> Teacher Vacation            e6b8af pink    -> 9-12 Report Cards
+      //   999999 grey   -> K-8 Report Cards            00ff00 green   -> K-8 Progress Reports
+      //   00ffff cyan   -> 9-12 Progress Report        000000 black   -> 9-12 End of Six Weeks
+      //   cbdb2c olive  -> K-8 End of Nine Weeks       *              -> HS Last Report Card
+      //
+      // NOTE: this is the 2023-2024 school year. Every date below is in the past.
+      "days": [
+        { "date": "2023-07-04", "title": "Holiday", "kind": "NoSchool" },
+
+        { "date": "2023-08-16", "endDate": "2023-08-18", "title": "Teacher workday", "kind": "TeacherWorkday" },
+        { "date": "2023-08-21", "endDate": "2023-08-25", "title": "Mandatory teacher workday", "kind": "TeacherWorkday" },
+        { "date": "2023-08-28", "title": "First day of school", "kind": "FirstDay" },
+
+        { "date": "2023-09-04", "title": "Holiday", "kind": "NoSchool" },
+        { "date": "2023-09-14", "title": "9-12 progress report", "kind": "Event" },
+        { "date": "2023-09-26", "title": "K-8 progress reports", "kind": "Event" },
+
+        { "date": "2023-10-03", "title": "9-12 end of six weeks", "kind": "Event" },
+        { "date": "2023-10-06", "title": "Mandatory teacher workday", "kind": "TeacherWorkday" },
+        { "date": "2023-10-10", "title": "9-12 report cards", "kind": "Event" },
+        { "date": "2023-10-23", "title": "9-12 progress report", "kind": "Event" },
+        { "date": "2023-10-26", "title": "K-8 end of nine weeks", "kind": "Event" },
+        { "date": "2023-10-27", "title": "Teacher workday", "kind": "TeacherWorkday" },
+
+        { "date": "2023-11-01", "title": "K-8 report cards", "kind": "Event" },
+        { "date": "2023-11-09", "title": "9-12 end of six weeks", "kind": "Event" },
+        { "date": "2023-11-10", "title": "Holiday", "kind": "NoSchool" },
+        { "date": "2023-11-16", "title": "9-12 report cards", "kind": "Event" },
+        { "date": "2023-11-22", "title": "Teacher workday", "kind": "TeacherWorkday" },
+        { "date": "2023-11-23", "endDate": "2023-11-24", "title": "Holiday", "kind": "NoSchool" },
+
+        { "date": "2023-12-01", "title": "K-8 progress reports", "kind": "Event" },
+        { "date": "2023-12-04", "title": "9-12 progress report", "kind": "Event" },
+        { "date": "2023-12-21", "title": "9-12 end of six weeks", "kind": "Event" },
+        { "date": "2023-12-22", "title": "Teacher vacation", "kind": "NoSchool" },
+        { "date": "2023-12-25", "endDate": "2023-12-27", "title": "Holiday", "kind": "NoSchool" },
+        { "date": "2023-12-28", "endDate": "2023-12-29", "title": "Teacher vacation", "kind": "NoSchool" },
+
+        { "date": "2024-01-01", "title": "Holiday", "kind": "NoSchool" },
+        { "date": "2024-01-02", "title": "Teacher vacation", "kind": "NoSchool" },
+        { "date": "2024-01-03", "endDate": "2024-01-05", "title": "Teacher workday", "kind": "TeacherWorkday" },
+        { "date": "2024-01-10", "title": "9-12 report cards", "kind": "Event" },
+        { "date": "2024-01-15", "title": "Holiday", "kind": "NoSchool" },
+        { "date": "2024-01-16", "title": "Mandatory teacher workday", "kind": "TeacherWorkday" },
+        { "date": "2024-01-19", "title": "K-8 end of nine weeks", "kind": "Event" },
+        { "date": "2024-01-25", "title": "K-8 report cards", "kind": "Event" },
+        { "date": "2024-01-31", "title": "9-12 progress report", "kind": "Event" },
+
+        { "date": "2024-02-19", "title": "Teacher workday", "kind": "TeacherWorkday" },
+        { "date": "2024-02-20", "title": "K-8 progress reports", "kind": "Event" },
+        { "date": "2024-02-22", "title": "9-12 end of six weeks", "kind": "Event" },
+        { "date": "2024-02-28", "title": "9-12 report cards", "kind": "Event" },
+
+        { "date": "2024-03-05", "title": "Teacher vacation", "kind": "NoSchool" },
+        { "date": "2024-03-11", "title": "Mandatory teacher workday", "kind": "TeacherWorkday" },
+        { "date": "2024-03-19", "title": "9-12 progress report", "kind": "Event" },
+        { "date": "2024-03-26", "title": "K-8 end of nine weeks", "kind": "Event" },
+        { "date": "2024-03-29", "title": "Holiday", "kind": "NoSchool" },
+
+        { "date": "2024-04-01", "endDate": "2024-04-05", "title": "Teacher vacation", "kind": "NoSchool" },
+        { "date": "2024-04-10", "title": "K-8 report cards", "kind": "Event" },
+        { "date": "2024-04-17", "title": "9-12 end of six weeks", "kind": "Event" },
+        { "date": "2024-04-23", "title": "9-12 report cards", "kind": "Event" },
+
+        { "date": "2024-05-02", "title": "K-8 progress reports", "kind": "Event" },
+        { "date": "2024-05-08", "title": "9-12 progress report", "kind": "Event" },
+        { "date": "2024-05-27", "title": "Holiday", "kind": "NoSchool" },
+        { "date": "2024-05-29", "title": "Last day of school (early release)", "kind": "LastDay" },
+        { "date": "2024-05-30", "endDate": "2024-05-31", "title": "Mandatory teacher workday", "kind": "TeacherWorkday" },
+
+        { "date": "2024-06-03", "endDate": "2024-06-05", "title": "Teacher workday", "kind": "TeacherWorkday" },
+        { "date": "2024-06-06", "title": "Teacher workday • HS last report card", "kind": "TeacherWorkday" },
+        { "date": "2024-06-07", "title": "Teacher workday", "kind": "TeacherWorkday" },
+        { "date": "2024-06-10", "endDate": "2024-06-11", "title": "Teacher workday", "kind": "TeacherWorkday" }
+      ]
+    },
+    {
+      "name": "Ascend Leadership Academy",
+      "shortName": "Ascend",
+      "color": "#7C3AED",
+      "schoolYear": "2026-2027",
+      "status": "Reviewed",
+      "sourceUrl": "https://www.ascendleadershipacademy.org/",
+
+      // PROVENANCE: the school's published 2026-2027 event list, supplied directly and reviewed.
+      //
+      // This settles the contradiction in the school's own PDF, which gave "First Day - August 27"
+      // and "Last Day - June 7th" at the top and "August 5th / May 21st" lower down. The lower
+      // block was correct: the year runs Wed 5 Aug 2026 to Fri 21 May 2027. The earlier August 27
+      // and June 7 entries were wrong and have been removed.
+      //
+      // Every weekday label in the source was checked against the actual date and all 48 agree.
+      //
+      // KNOWN ODDITY, transcribed as published: the 11-12 March 2027 events are titled "Fall
+      // Exhibition/Student Showcase" despite falling in spring. Retitle if the school confirms.
+      "days": [
+        { "date": "2026-07-31", "title": "ALA Remote/Hybrid Academy Orientation", "kind": "Event", "startTime": "12:00", "endTime": "13:30" },
+        { "date": "2026-08-03", "title": "ALA New Student Orientation", "kind": "Event" },
+        { "date": "2026-08-04", "title": "ALA Open House", "kind": "Event", "startTime": "15:00", "endTime": "18:00" },
+        { "date": "2026-08-05", "title": "First day of the 2026/2027 school year", "kind": "FirstDay" },
+        { "date": "2026-08-07", "title": "Senior Sunrise Breakfast", "kind": "Event", "startTime": "06:00", "endTime": "08:00" },
+        { "date": "2026-08-19", "title": "Meet The Teacher Night", "kind": "Event", "startTime": "17:00", "endTime": "19:30" },
+        { "date": "2026-08-19", "title": "Senior Parent Night (Room 215/218)", "kind": "Event", "startTime": "17:00", "endTime": "18:00" },
+        { "date": "2026-08-28", "title": "Fall Sports Movie Night", "kind": "Event", "startTime": "19:00", "endTime": "21:00" },
+
+        { "date": "2026-09-07", "title": "Labor Day — no school", "kind": "NoSchool" },
+
+        { "date": "2026-10-02", "title": "Senior Movie Night", "kind": "Event", "startTime": "19:00", "endTime": "22:00" },
+        { "date": "2026-10-08", "title": "Fall Exhibition/Student Showcase Night", "kind": "Event" },
+        { "date": "2026-10-08", "title": "Fall Choir Concert", "kind": "Event", "startTime": "18:00", "endTime": "19:00" },
+        { "date": "2026-10-09", "title": "Fall Exhibition/Student Showcase", "kind": "Event" },
+        { "date": "2026-10-17", "title": "High School Homecoming Dance", "kind": "Event", "startTime": "18:00", "endTime": "20:30" },
+        { "date": "2026-10-24", "title": "ALA Annual Fall Festival", "kind": "Event" },
+        { "date": "2026-10-29", "title": "Fall Sports Awards Ceremony", "kind": "Event", "startTime": "17:30", "endTime": "19:30" },
+
+        { "date": "2026-11-02", "title": "Winter Sports Parent Meeting", "kind": "Event", "startTime": "17:30", "endTime": "18:30" },
+        { "date": "2026-11-11", "title": "Veterans Day — no school", "kind": "NoSchool" },
+        { "date": "2026-11-23", "endDate": "2026-11-27", "title": "Thanksgiving Break", "kind": "Break" },
+
+        { "date": "2026-12-04", "title": "Winter Sports Movie Night", "kind": "Event", "startTime": "19:00", "endTime": "21:00" },
+        { "date": "2026-12-09", "title": "Winter Choir Concert", "kind": "Event", "startTime": "17:00", "endTime": "19:00" },
+        { "date": "2026-12-14", "endDate": "2026-12-18", "title": "HS Final Exams", "kind": "Event" },
+        { "date": "2026-12-21", "endDate": "2027-01-05", "title": "Winter Break", "kind": "Break" },
+
+        { "date": "2027-01-06", "title": "First Day of Second Semester", "kind": "Event" },
+        { "date": "2027-01-18", "title": "Martin Luther King Jr. Day — no school", "kind": "NoSchool" },
+
+        { "date": "2027-02-18", "title": "Spring Sports Parent Meeting", "kind": "Event", "startTime": "17:30", "endTime": "18:30" },
+        { "date": "2027-02-27", "title": "NHS Car Show", "kind": "Event" },
+
+        { "date": "2027-03-04", "title": "Winter Sports Awards Ceremony", "kind": "Event", "startTime": "17:30", "endTime": "18:30" },
+        { "date": "2027-03-11", "title": "Fall Exhibition/Student Showcase Night", "kind": "Event" },
+        { "date": "2027-03-12", "title": "Fall Exhibition/Student Showcase", "kind": "Event" },
+        { "date": "2027-03-18", "endDate": "2027-03-20", "title": "ALA Spring Musical", "kind": "Event" },
+        { "date": "2027-03-23", "title": "CCCC Parent Information Night", "kind": "Event", "startTime": "17:30", "endTime": "18:30" },
+        { "date": "2027-03-26", "endDate": "2027-04-02", "title": "ALA Spring Break", "kind": "Break" },
+
+        { "date": "2027-04-14", "endDate": "2027-04-17", "title": "Senior Grad Bash", "kind": "Event" },
+        { "date": "2027-04-16", "title": "Spring Sports Movie Night", "kind": "Event", "startTime": "19:00", "endTime": "20:00" },
+        { "date": "2027-04-27", "title": "Pop's Concert", "kind": "Event", "startTime": "18:00", "endTime": "19:00" },
+
+        { "date": "2027-05-03", "endDate": "2027-05-07", "title": "Educator Appreciation Week", "kind": "Event" },
+        { "date": "2027-05-07", "title": "ALA Annual Talent Show", "kind": "Event", "startTime": "19:00", "endTime": "21:00" },
+        { "date": "2027-05-10", "endDate": "2027-05-12", "title": "Middle School EOG Assessment Testing", "kind": "Event" },
+        { "date": "2027-05-11", "title": "Junior Night", "kind": "Event", "startTime": "17:30", "endTime": "18:30" },
+        { "date": "2027-05-12", "title": "Spring Sports Awards Ceremony", "kind": "Event", "startTime": "17:30", "endTime": "19:30" },
+        { "date": "2027-05-13", "title": "Remote Academy Awards Day", "kind": "Event" },
+        { "date": "2027-05-13", "title": "Senior Awards Night", "kind": "Event", "startTime": "17:30", "endTime": "19:30" },
+        { "date": "2027-05-13", "title": "Senior Sunset", "kind": "Event", "startTime": "20:00", "endTime": "21:00" },
+        { "date": "2027-05-17", "endDate": "2027-05-21", "title": "High School Final Exams", "kind": "Event" },
+        { "date": "2027-05-19", "title": "ALA Graduation Class of 2027", "kind": "Event", "startTime": "18:30", "endTime": "21:00" },
+        { "date": "2027-05-21", "title": "8th Grade Promotion Ceremony", "kind": "Event" },
+        { "date": "2027-05-21", "title": "Last day of school — early release", "kind": "LastDay" }
+      ]
+    }
+  ]
+}

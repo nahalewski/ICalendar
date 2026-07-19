@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>WinExe</OutputType><AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault></PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" />
+    <PackageReference Include="Avalonia.Desktop" />
+    <PackageReference Include="Avalonia.Themes.Fluent" />
+    <PackageReference Include="Avalonia.Fonts.Inter" />
+    <PackageReference Include="CommunityToolkit.Mvvm" />
+    <ProjectReference Include="../FamilyHub.Application/FamilyHub.Application.csproj" />
+    <ProjectReference Include="../FamilyHub.Core/FamilyHub.Core.csproj" />
+    <ProjectReference Include="../FamilyHub.Infrastructure/FamilyHub.Infrastructure.csproj" />
+    <ProjectReference Include="../FamilyHub.Shared/FamilyHub.Shared.csproj" />
+    <ProjectReference Include="../FamilyHub.Web/FamilyHub.Web.csproj" />
+  </ItemGroup>
+  <ItemGroup><FrameworkReference Include="Microsoft.AspNetCore.App" /></ItemGroup>
+  <ItemGroup><AvaloniaResource Include="Assets/**" /></ItemGroup>
+  <ItemGroup><Content Include="school-calendars.json" CopyToOutputDirectory="PreserveNewest" /><Content Include="bell-schedules.json" CopyToOutputDirectory="PreserveNewest" /></ItemGroup>
+</Project>

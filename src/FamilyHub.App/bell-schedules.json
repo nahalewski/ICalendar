@@ -1,0 +1,89 @@
+// Daily bell schedules for the Class Block page.
+//
+// PROVENANCE: transcribed from the official Ascend Leadership Academy bell schedule PDF
+// (https://www.ascendleadershipacademy.org/_files/ugd/abe0e2_7c6a269865884b889138c352f9ed1431.pdf),
+// which is titled "2024-25". Confirm the times still hold for 2026-27.
+//
+// "ALA Teacher PD 7:30-9:00" on Wednesdays is staff time, so it is marked StaffOnly and is not
+// counted as part of a child's school day — students start at 9:10 on Wednesdays.
+//
+// kind: Class | Lunch | Advisory | StaffOnly
+{
+  "schedules": [
+    {
+      "level": "Middle",
+      "schoolName": "Ascend Leadership Academy — Middle School",
+      "sourceYear": "2024-25",
+      "days": [
+        {
+          "name": "Regular day",
+          "days": [ "Monday", "Tuesday", "Thursday", "Friday" ],
+          "blocks": [
+            { "name": "Block 1", "start": "08:10", "end": "09:20" },
+            { "name": "RAISE",   "start": "09:23", "end": "09:48", "kind": "Advisory" },
+            { "name": "Block 2", "start": "09:48", "end": "10:58" },
+            { "name": "Lunch",   "start": "11:01", "end": "11:31", "kind": "Lunch" },
+            { "name": "Block 3", "start": "11:34", "end": "12:44" },
+            { "name": "Block 4", "start": "12:47", "end": "13:57" },
+            { "name": "Block 5", "start": "14:00", "end": "15:10" }
+          ]
+        },
+        {
+          "name": "Wednesday",
+          "days": [ "Wednesday" ],
+          "blocks": [
+            { "name": "ALA Teacher PD", "start": "07:30", "end": "09:00", "kind": "StaffOnly" },
+            { "name": "FLEX/MTSS",      "start": "09:10", "end": "10:10", "kind": "Advisory" },
+            { "name": "Block 1",        "start": "10:15", "end": "11:05" },
+            { "name": "Lunch",          "start": "11:08", "end": "11:38", "kind": "Lunch" },
+            { "name": "Block 2",        "start": "11:41", "end": "12:31" },
+            { "name": "Block 3",        "start": "12:34", "end": "13:24" },
+            { "name": "Block 4",        "start": "13:27", "end": "14:17" },
+            { "name": "Block 5",        "start": "14:20", "end": "15:10" }
+          ]
+        }
+      ]
+    },
+    {
+      "level": "High",
+      "schoolName": "Ascend Leadership Academy — High School (4x4)",
+      "sourceYear": "2024-25",
+      "days": [
+        {
+          "name": "Regular day",
+          "days": [ "Monday", "Tuesday", "Thursday", "Friday" ],
+          "blocks": [
+            { "name": "Block 1", "start": "08:10", "end": "09:40" },
+            { "name": "Block 2", "start": "09:45", "end": "11:15" },
+            { "name": "Lunch",   "start": "11:20", "end": "12:00", "kind": "Lunch" },
+            { "name": "Block 3", "start": "12:05", "end": "13:35" },
+            { "name": "Block 4", "start": "13:40", "end": "15:10" }
+          ]
+        },
+        {
+          "name": "Wednesday (late start)",
+          "days": [ "Wednesday" ],
+          "blocks": [
+            { "name": "ALA Teacher PD",        "start": "07:30", "end": "09:00", "kind": "StaffOnly" },
+            { "name": "Block 1",               "start": "09:10", "end": "10:10" },
+            { "name": "FLEX/MTSS/Advisory",    "start": "10:15", "end": "11:15", "kind": "Advisory" },
+            { "name": "Lunch",                 "start": "11:20", "end": "11:55", "kind": "Lunch" },
+            { "name": "Block 2",               "start": "12:00", "end": "13:00" },
+            { "name": "Block 3",               "start": "13:05", "end": "14:05" },
+            { "name": "Block 4",               "start": "14:10", "end": "15:10" }
+          ]
+        }
+      ]
+    }
+  ],
+
+  // Elliana is in elementary school, which Ascend does not serve (the academy is grades 5-12) and
+  // which the bell schedule PDF therefore does not cover. Her level has no schedule, so the page
+  // shows her waiting on one rather than inventing block times.
+  "students": [
+    { "name": "Xander",   "level": "Middle",     "color": "#F97316" },
+    { "name": "Allie",    "level": "High",       "color": "#7C3AED" },
+    { "name": "Gabby",    "level": "High",       "color": "#0891B2" },
+    { "name": "Elliana",  "level": "Elementary", "color": "#16A34A" }
+  ]
+}

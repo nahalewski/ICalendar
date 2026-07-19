@@ -1,0 +1,17 @@
+bin/
+obj/
+.vs/
+.idea/
+*.user
+data/
+logs/
+secrets/
+client_secret*.json
+token*.json
+.env
+.dotnet-home/
+.nuget/
+*.keystore
+*.jks
+.android-sdk/
+.java-sdk/
